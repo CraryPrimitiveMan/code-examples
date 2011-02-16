@@ -42,7 +42,7 @@ insert(){
     # )
 
     DEFAULT_SQL="INSERT INTO t_user(name, password) VALUES"
-    for j in $(seq 0 500)
+    for j in $(seq 1 2000)
     do
         INSERT_SQL=$DEFAULT_SQL
         for i in $(seq 1 1000)
@@ -53,6 +53,7 @@ insert(){
         $MYSQL -hlocalhost -u$USERNAME -p$PASSWORD -D$DB -e "${INSERT_SQL:0:-1}"
         echo -n "."
     done
+    echo ""
 }
 
 case "$1" in
