@@ -1,0 +1,34 @@
+#!/bin/bash
+# Combine the markdown file and convert it to pdf
+[[ -d $HOME/tmp ]] || mkdir $HOME/tmp
+tempfile=$HOME/tmp/$(basename $0).$$.$RANDOM
+touch $tempfile
+
+exit_on_signal_SIGINT () {
+	rm $tempfile
+	echo "Script interrupted." 2>&1
+	exit 0
+}
+exit_on_signal_SIGTERM () {
+	rm $tempfile
+	echo "Script terminated." 2>&1
+	exit 0
+}
+
+trap exit_on_signal_SIGINT SIGINT
+trap exit_on_signal_SIGTERM SIGTERM
+
+cat "index.md" "preface.md" >> $tempfile
+fileNames=$(ls -v)
+for file in ${fileNames:?"file is empty"}; do
+	if [[ -f "$file" && "$file" =~ ^[0-9]+.?[0-9]?.md$ ]]; then
+		cat $file >> $tempfile
+		sleep 3
+		#echo ${file%%.md}
+	fi
+done
+
+cp $tempfile 'all.md'
+rm $tempfile
+markdown -o all.html all.md
+xhtml2pdf --html all.html all.pdf

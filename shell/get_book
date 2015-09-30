@@ -1,0 +1,10 @@
+#!/bin/bash
+
+path=http://www.chrisyue.com/translation-create-your-own-framework-on-top-of-the-symfony2-components-part-
+name=create-your-own-framework-on-top-of-the-symfony2-components-part-
+for (( i=1; i<=12; i=i+1 )); do
+    wkhtmltopdf ${path}${i}.html ${name}${i}.pdf
+done
+
+# url=http://akaedu.github.io/book/index.html
+# content=$(curl $url)
