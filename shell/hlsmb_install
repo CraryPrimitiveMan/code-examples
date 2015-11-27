@@ -1,0 +1,12 @@
+#!/bin/bash
+
+hlsmb=/usr/local/bin/hlsmb
+rm -rf $hlsmb
+touch $hlsmb
+chmod +x $hlsmb
+echo "#!/bin/bash
+path=\${1//\\\\\\\\/\/}
+if [[ \${path:0:4} != \"smb:\" ]]; then
+    path=\"smb:\"\${path}
+fi
+xdg-open \$path" > $hlsmb

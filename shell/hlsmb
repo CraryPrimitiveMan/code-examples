@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [[ "$1" == "" ]]; then
+    echo "Use it like follows:
+hlsmb '\\\\192.168.1.100\Development'
+hlsmb 'smb:\\\\192.168.1.100\Development'
+hlsmb 'smb://192.168.1.100/Development'"
+else
+    path=${1//\\/\/}
+    if [[ ${path:0:4} != "smb:" ]]; then
+        path="smb:"${path}
+    fi
+    xdg-open $path
+fi
