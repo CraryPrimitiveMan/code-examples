@@ -1,0 +1,71 @@
+#!/bin/bash
+MYSQL="/usr/bin/mysql"
+
+input(){
+    #输用户名
+    echo "##### Please enter your username [enter=root] #####"
+    read USERNAME
+    if [ "$USENAME" = "" ]; then
+        USERNAME="root"
+    fi
+
+    #输密码
+    echo "##### Please enter your password [enter=root] #####"
+    stty -echo
+    read PASSWORD
+    if [ "$PASSWORD" = "" ]; then
+        PASSWORD="root"
+    fi
+    stty echo
+
+    #选择数据库
+    echo "##### Please select your database [enter=youku] #####"
+    DBS="`$MYSQL -u$USERNAME -p$PASSWORD -hlocalhost --batch --skip-column-names -e 'show databases' | sed 's/ /%/g'`"
+    select DB in $DBS;
+    do
+        break
+    done
+
+    #execute
+}
+execute(){
+    input
+    $MYSQL -u$USERNAME -p$PASSWORD -D$DB < test.sql
+}
+
+insert(){
+    input
+    # create table t_user(
+    #     id int(11) primary key AUTO_INCREMENT,
+    #     name varchar(15),
+    #     password varchar(32)
+    # )
+
+    DEFAULT_SQL="INSERT INTO t_user(name, password) VALUES"
+    for j in $(seq 0 500)
+    do
+        INSERT_SQL=$DEFAULT_SQL
+        for i in $(seq 1 1000)
+        do
+            INSERT_SQL="${INSERT_SQL}""('harry$[$i+$j*1000]',md5('harry$[$i+$j*1000]')),"
+        done
+        # echo ${INSERT_SQL:0:-1}
+        $MYSQL -hlocalhost -u$USERNAME -p$PASSWORD -D$DB -e "${INSERT_SQL:0:-1}"
+        echo -n "."
+    done
+}
+
+case "$1" in
+    'insert')
+        clear
+        insert
+        ;;
+    'create')
+        clear
+        execute
+        ;;
+    *)
+        echo "Usage:DbTool:insert or create!"
+        ;;
+esac
+exit 0
