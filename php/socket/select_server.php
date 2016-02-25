@@ -5,9 +5,9 @@ class SelectSocketServer
 {
     private static $socket;
 
-    private static $timeout;
+    private static $timeout = 60;
 
-    private static $maxconns;
+    private static $maxconns = 1024;
 
     private static $connections = [];
 
@@ -42,6 +42,7 @@ class SelectSocketServer
                     }
 
                     self::$connections[$i] = $newconn;
+                    $writefds[$i] = $newconn;
 
                     if ($reject) {
                         socket_write($writefds[$i], $reject);
@@ -66,7 +67,7 @@ class SelectSocketServer
                     }
 
                     $tmp = substr($line, -1);
-                    if ($tmp != "/r" && $tmp != "/n") {
+                    if ($tmp != "\r" && $tmp != "\n") {
                         continue;
                     }
 
@@ -97,4 +98,4 @@ class SelectSocketServer
     }
 }
 
-new SelectSocketServer(2001);
+new SelectSocketServer(2000);
