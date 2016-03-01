@@ -28,8 +28,8 @@ class EpollSocketServer
             die("Port must be a number which bigger than 1024\n");
         }
 
-        $socket_server = stream_socket_server("tcp://0.0.0.0:{$port}" $errno, $errstr);
-        if (!socket_server) die("$errstr ($errno)");
+        $socket_server = stream_socket_server("tcp://0.0.0.0:{$port}", $errno, $errstr);
+        if (!$socket_server) die("$errstr ($errno)");
 
         stream_set_blocking($socket_server, 0);// 非阻塞
 
@@ -74,14 +74,14 @@ class EpollSocketServer
         event_buffer_enable($buffer, EV_READ | EV_PERSIST);
 
         self::$connections[$id] = $connection;
-        self::$buffer[$id] = $buffer;
+        self::$buffers[$id] = $buffer;
     }
 
     public function ev_error($buffer, $error, $id)
     {
         event_buffer_disable(self::$buffers[$id], EV_READ | EV_WRITE);
         event_buffer_free(self::$buffers[$id]);
-        fclose(self::$connection[$id]);
+        fclose(self::$connections[$id]);
         unset(self::$buffers[$id], self::$connections[$id]);
     }
 
