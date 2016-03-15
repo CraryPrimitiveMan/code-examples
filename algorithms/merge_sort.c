@@ -55,4 +55,6 @@ void merge(int data[], int start, int middle, int end) {
     while (rightPostion < rightLen) {
         data[k++] = right[rightPostion++];
     }
+    free(left);
+    free(right);
 }
