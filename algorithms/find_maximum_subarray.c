@@ -14,6 +14,7 @@ int main() {
     int *result = find_maximum_subarray(data, low, high);
     printf("The maximum subarray start index is %d, end index is %d, sum is %d", result[1], result[2], result[0]);
     printf("\n");
+    free(result);
     return 0;
 }
 
