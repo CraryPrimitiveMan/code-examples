@@ -29,8 +29,8 @@ void merge_sort(int data[], int start, int end) {
 void merge(int data[], int start, int middle, int end) {
     int leftLen = middle - start + 1;
     int rightLen = end - middle;
-    int *left = (int *) malloc (leftLen * sizeof(int));
-    int *right = (int *) malloc (rightLen * sizeof(int));
+    int *left = (int *)malloc(leftLen * sizeof(int));
+    int *right = (int *)malloc(rightLen * sizeof(int));
 
     int i = start, j = middle + 1;
     for (; i <= middle; i++) {
