@@ -46,9 +46,7 @@ int * find_maximum_subarray(int data[], int low, int high) {
         result = get_int_pointer(data[low], low, high);
     } else {
         int mid = (low + high) / 2;
-        int * left_result = (int *)malloc(sizeof(int) * 3);
-        int * right_result = (int *)malloc(sizeof(int) * 3);
-        int * mid_result = (int *)malloc(sizeof(int) * 3);
+        int *left_result, *right_result, *mid_result;
         left_result = find_maximum_subarray(data, low, mid);
         right_result = find_maximum_subarray(data, mid + 1, high);
         mid_result = find_max_crossing_subarray(data, low, mid, high);
@@ -64,9 +62,8 @@ int * find_maximum_subarray(int data[], int low, int high) {
         } else {
             result = mid_result;
             free(left_result);
-            free(mid_result);
+            free(right_result);
         }
-        return result;
     }
 
     return result;
