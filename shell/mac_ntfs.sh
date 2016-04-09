@@ -2,6 +2,7 @@
 
 fstab_file=/etc/fstab
 disk_path=/Volumes/
+desktop_path=~/Desktop
 disks_ntfs=$(diskutil list | grep Windows_NTFS | awk -F ':' '{print $2}' | sed 's/^[ ]*Windows_NTFS[ ]*//')
 IFS=$(echo -en "\n\b")
 fileNames=$(ls -v ${disk_path})
@@ -20,4 +21,6 @@ for file in ${fileNames}; do
 	fi
 done
 # create the disk link
-ln -s ${disk_path} ~/Desktop/
+if [[ ! -d "${desktop_path}${disk_path}" ]]; then
+	ln -s ${disk_path} ${desktop_path}
+fi
