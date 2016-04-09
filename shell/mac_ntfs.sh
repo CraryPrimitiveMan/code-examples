@@ -13,7 +13,8 @@ for file in ${fileNames}; do
 		for disk_ntfs in ${disks_ntfs}; do
 			if [[ ${disk_ntfs} =~ ${file} ]]; then
 				# add a ntfs disk
-				file=${file// /\\040}' none ntfs rw,auto,nobrowse'
+				file='LABEL='${file// /\\\\\\\\040}' none ntfs rw,auto,nobrowse'
+				echo ${file}
 				sudo sh -c "echo ${file} >> ${fstab_file}"
 				sudo sh -c "echo '\n' >> ${fstab_file}"
 			fi
