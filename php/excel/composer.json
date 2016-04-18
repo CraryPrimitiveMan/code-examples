@@ -1,0 +1,19 @@
+{
+    "name": "user/excel",
+    "authors": [
+        {
+            "name": "Harry Sun",
+            "email": "sunguangjun@126.com"
+        }
+    ],
+    "require": {
+      "php": ">=5.4.0",
+      "phpoffice/phpexcel": "1.8.0"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}
