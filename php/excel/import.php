@@ -9,28 +9,28 @@ $host = 'localhost';
 $excelDir = $argv[1];
 $filenames = scandir($excelDir);
 $lastFile = $excelDir . $tablename . '.csv';
-// foreach ($filenames as $filename) {
-//   if (pathinfo($filename, PATHINFO_EXTENSION) === 'xlsx') {
-//     $filename = $excelDir . $filename;
-//     $objReader = PHPExcel_IOFactory::createReader('Excel2007');
-//     $objPHPExcel = $objReader->load($filename);
-//     $objPHPExcel->getActiveSheet()->removeRow(1, 1);
-//     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV')
-//       ->setDelimiter(',')
-//       ->setEnclosure('"')
-//       ->setLineEnding("\r\n")
-//       ->setSheetIndex(0);
-//     $newFilename = str_replace('.xlsx', '.csv', $filename);
-//     $objWriter->save($newFilename);
-//     rename($newFilename, $lastFile);
-//     $cmd = 'mysqlimport --local --user=' . $username . ' --password=' . $password .
-//       ' --fields-terminated-by="," --fields-enclosed-by="\"" --lines-terminated-by="\r\n" ' .
-//       $database . ' "' . $lastFile . '"';
-//     echo exec($cmd), "\n";
-//   }
-// }
-// unlink($lastFile);
-// echo "成功导入\n";
+foreach ($filenames as $filename) {
+  if (pathinfo($filename, PATHINFO_EXTENSION) === 'xlsx') {
+    $filename = $excelDir . $filename;
+    $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+    $objPHPExcel = $objReader->load($filename);
+    $objPHPExcel->getActiveSheet()->removeRow(1, 1);
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV')
+      ->setDelimiter(',')
+      ->setEnclosure('"')
+      ->setLineEnding("\r\n")
+      ->setSheetIndex(0);
+    $newFilename = str_replace('.xlsx', '.csv', $filename);
+    $objWriter->save($newFilename);
+    rename($newFilename, $lastFile);
+    $cmd = 'mysqlimport --local --user=' . $username . ' --password=' . $password .
+      ' --fields-terminated-by="," --fields-enclosed-by="\"" --lines-terminated-by="\r\n" ' .
+      $database . ' "' . $lastFile . '"';
+    echo exec($cmd), "\n";
+  }
+}
+unlink($lastFile);
+echo "成功导入\n";
 
 $coupons = [
   'Batman', 'Golden Reel', 'SCEC', 'THOM', 'Fun Zone', 'Pearl Dragon',
