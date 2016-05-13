@@ -60,25 +60,41 @@ $arr = [
 		]
 	]
 ];
+$allKeys = array_reduce($arr, function($prevSpec, $nextSpec) {
+		$keys = [];
+		if (empty($prevSpec)) {
+			foreach ($nextSpec['properties'] as $nextSpecProp) {
+					$keys[] = $nextSpecProp['id'];
+			}
+		}
 
-$result = [];
-foreach ($arr as $index => $value) {
-  $result[$index] = [];
-  foreach ($value['properties'] as $propertie) {
-    $result[$index][] = $propertie['id'];
-  }
-}
-
-$a = array_reduce($result, function($pre, $next) {
-  $temp = [];
-  if (empty($pre)) {
-    return $next;
-  }
-  foreach ($pre as $key1 => $value1) {
-    foreach ($next as $key2 => $value2) {
-      $temp[] = $value1 . ',' . $value2;
-    }
-  }
-  return $temp;
+		foreach ($prevSpec as $prevSpecPropId) {
+				foreach ($nextSpec['properties'] as $nextSpecProp) {
+						$keys[] = $prevSpecPropId . ',' . $nextSpecProp['id'];
+				}
+		}
+		return $keys;
 });
-var_dump($a);
+var_dump($allKeys);
+var_dump(array_map('md5', $allKeys));
+// $result = [];
+// foreach ($arr as $index => $value) {
+//   $result[$index] = [];
+//   foreach ($value['properties'] as $propertie) {
+//     $result[$index][] = $propertie['id'];
+//   }
+// }
+//
+// $a = array_reduce($result, function($pre, $next) {
+//   $temp = [];
+//   if (empty($pre)) {
+//     return $next;
+//   }
+//   foreach ($pre as $key1 => $value1) {
+//     foreach ($next as $key2 => $value2) {
+//       $temp[] = $value1 . ',' . $value2;
+//     }
+//   }
+//   return $temp;
+// });
+// var_dump($a);
