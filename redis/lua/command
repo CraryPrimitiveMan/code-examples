@@ -1,0 +1,2 @@
+redis-cli --eval ratelimiting.lua test1 , 10 3
+
