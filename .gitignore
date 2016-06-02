@@ -2,3 +2,4 @@
 **/node_modules/*
 a.out
 algorithms/a.out.dSYM
+/webpack/bundle.js

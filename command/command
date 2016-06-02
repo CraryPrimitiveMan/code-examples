@@ -1,0 +1,21 @@
+rsync -av /var/www/aug-marketing/src/modules/demo/ root@192.168.161.237:/srv/cp_stage/src/modules/demo
+
+# 修正ubuntu依赖错误
+sudo rm -rf /var/lib/dpkg/info/php5-memcache.prerm
+
+# curl post
+curl -H 'Content-Type: application/json' -X POST  --data '{
+  "title": "My first blog entry",
+  "text":  "Just trying this out...",
+  "date":  "2014/01/01"
+}'  http://localhost:9200/website/blog
+
+# curl put
+curl -H 'Content-Type: application/json' -H 'Accept: application/json' -X POST  --data '{
+  "title": "My first blog entry",
+  "text":  "Just trying this out...",
+  "date":  "2016/01/01"
+}'  http://localhost:9200/website/blog/2
+
+# curl get
+curl -X GET http://localhost:9200/website/blog/2?pretty
