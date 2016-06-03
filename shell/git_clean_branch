@@ -1,0 +1,37 @@
+#!/bin/bash
+path=${1}.git/refs/heads
+cd ${path}
+# echo $path
+protectedBranches=(
+"develop"
+"master"
+)
+
+function inArray()
+{
+  # echo $1
+  branchName=$1
+  for branch in ${protectedBranches[@]}
+  do
+    if [[ $branchName == $branch ]]; then
+      return 1;
+    fi
+  done
+  return 0;
+}
+
+
+for file in $(ls ${path})
+do
+  if [[ -f ${file} ]]; then
+    isInArray=$(inArray ${file})
+    if [[ $isInArray == 0 ]]; then
+      echo ${file}
+      $(git branch -D ${file})
+    fi
+  fi
+done
+
+
+
+# .git/refs/heads
