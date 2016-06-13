@@ -1,6 +1,6 @@
 softwares=(
 lantern
-chromium
+#chromium
 git
 zeal
 
