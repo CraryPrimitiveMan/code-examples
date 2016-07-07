@@ -21,3 +21,33 @@ db.screferralShareLog.aggregate([
 },
 { '$limit' : 5 }
 ]);
+
+db.user.aggregate(
+   [
+      {
+          $match: {
+              "unsubscribeTime" : {
+                "$gte":ISODate("2016-06-23T16:00:00.000Z"),
+                "$lte":ISODate("2016-06-24T16:00:00.000Z")
+              }
+          }
+      },
+      {
+        $group : {
+           _id : {
+             year: { $year: "$unsubscribeTime" },
+             month: { $month: "$unsubscribeTime" },
+             day: { $dayOfMonth: "$unsubscribeTime" },
+             hour: { $hour: "$unsubscribeTime" }
+           },
+           count: { $sum: 1 }
+        }
+      },
+      {
+          $project : { _id: -1, count: 1, hour: { $mod: [ { $add: [ "$_id.hour", 8 ] }, 24] } }
+      },
+      {
+          $sort : { count : -1 }
+      }
+   ]
+)
