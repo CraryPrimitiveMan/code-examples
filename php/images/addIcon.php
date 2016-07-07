@@ -5,16 +5,27 @@ $filename = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQF48ToAAAAAAAAA
 $icon = 'icon.jpg';
 // Content type
 // header('Content-Type: image/jpeg');
+$starttime = explode(' ', microtime());
 
 // Get new sizes
 list($width, $height) = getimagesize($filename);
 list($iconWidth, $iconHeight) = getimagesize($icon);
+
 // Load
 $thumb = imagecreatefromjpeg($filename);
 $source = imagecreatefromjpeg($icon);
 
-// merge
-imagecopy($thumb, $source, ($width-$iconWidth)/2, ($height-$iconHeight)/2, 0, 0, $iconWidth, $iconHeight);
+for ($i=0; $i < 1000; $i++) {
 
-// Output
-imagejpeg($thumb, 'final.jpg');
+    // merge
+    // imagecopy($thumb, $source, ($width-$iconWidth)/2, ($height-$iconHeight)/2, 0, 0, $iconWidth, $iconHeight);
+    imagecopyresampled($thumb, $source, 0, 0, ($width-$iconWidth)/2, ($height-$iconHeight)/2, 0, 0, $iconWidth, $iconHeight);
+
+    // Output
+    imagejpeg($thumb, 'final.jpg');
+}
+//程序运行时间
+$endtime = explode(' ',microtime());
+$thistime = $endtime[0]+$endtime[1]-($starttime[0]+$starttime[1]);
+$thistime = round($thistime,3);
+echo "本网页执行耗时：".$thistime." 秒。" . "\n";
