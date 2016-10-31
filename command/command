@@ -19,3 +19,7 @@ curl -H 'Content-Type: application/json' -H 'Accept: application/json' -X POST  
 
 # curl get
 curl -X GET http://localhost:9200/website/blog/2?pretty
+
+# 连接Redis的两种方式
+telnet  192.168.1.100 6379
+redis-cli -h 192.168.1.100 -p 6379
