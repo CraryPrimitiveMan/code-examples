@@ -1,0 +1,13 @@
+{
+    "name": "harrysun/climate",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Harry Sun",
+            "email": "sunguangjun@126.com"
+        }
+    ],
+    "require": {
+        "league/climate": "^3.2"
+    }
+}
