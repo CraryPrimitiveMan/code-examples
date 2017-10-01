@@ -21,5 +21,40 @@ curl -H 'Content-Type: application/json' -H 'Accept: application/json' -X POST  
 curl -X GET http://localhost:9200/website/blog/2?pretty
 
 # 连接Redis的两种方式
-telnet  192.168.1.100 6379
+telnet 192.168.1.100 6379
 redis-cli -h 192.168.1.100 -p 6379
+
+# tcpdump 抓取包
+sudo tcpdump -iany tcp port 9502
+
+# mac strace
+sudo dtruss -f -p 30403
+# linux
+sudo strace -f -p 30403
+
+# lagou to 100offer
+(.*)
+(.*)
+编辑
+(.*)
+(.*)
+
+
+$3
+项目名称：$1
+$4
+职责范围：$2
+
+# Ubuntu 移除某个库
+sudo add-apt-repository --remove ppa:finalterm/daily
+
+# CentOS 查找安装的rpm包
+rpm -qa | grep package_name
+# 删除安装的rpm包
+rpm -e package_name
+# 安装rpm包
+rpm -Uvh package_name.rpm
+
+
+# kill lantern的进程
+ps aux | grep lantern | grep -v grep | awk '{print "kill -9 "$2}' | sh
