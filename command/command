@@ -63,3 +63,7 @@ ps aux | grep lantern | grep -v grep | awk '{print "kill -9 "$2}' | sh
 df -h
 # 查看当前文件夹下一层文件夹的容量
 du --max-depth=1 -h 
+
+# 清空git目录下的所有改动（新增、修改、删除）
+git checkout . && git clean -xdf
+
