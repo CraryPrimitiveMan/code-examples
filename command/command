@@ -67,3 +67,5 @@ du --max-depth=1 -h
 # 清空git目录下的所有改动（新增、修改、删除）
 git checkout . && git clean -xdf
 
+# awk例子
+awk '{print $1}' /your/file | uniq
