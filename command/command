@@ -69,3 +69,6 @@ git checkout . && git clean -xdf
 
 # awk例子
 awk '{print $1}' /your/file | uniq
+
+# tcpdump
+/usr/sbin/tcpdump -Xnlps0 -i eth1  dst 127.0.0.1  and port 80  -w ./out.log
